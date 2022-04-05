@@ -15,8 +15,7 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-		sqliteDatabaseAccess = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "notesDb"));
-		Debug.WriteLine("PAT:::::::" + sqliteDatabaseAccess.PathDB());
+		sqliteDatabaseAccess = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "notesDb")); // LocalApplicationData
 		LoadNotes();
 		
 
@@ -31,7 +30,7 @@ public partial class MainPage : ContentPage
         {
 			Debug.WriteLine("Catch");
 			Thread.Sleep(500);
-			LoadNotes();
+			//LoadNotes();
         } finally
         {
 			Debug.WriteLine("Fnally");

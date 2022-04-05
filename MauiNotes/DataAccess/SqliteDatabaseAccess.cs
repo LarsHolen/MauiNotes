@@ -1,5 +1,6 @@
 ﻿using OneLineNotebook.Models;
 using SQLite;
+using System.Diagnostics;
 
 namespace OneLineNotebook.DataAccess
 {
@@ -9,8 +10,18 @@ namespace OneLineNotebook.DataAccess
 
         public SqliteDatabaseAccess(string dbPath)
         {
+            
             _connection = new SQLiteAsyncConnection(dbPath);
-            _connection.CreateTableAsync<NoteModel>().Wait();
+            try
+            {
+                _connection.CreateTableAsync<NoteModel>().Wait();
+            } catch (Exception e)
+            {
+                Debug.WriteLine("Error1: " + e.InnerException.Message);
+                Debug.WriteLine("...:" + e.Message);
+                Debug.WriteLine("Error2: " + e.InnerException.Message);
+            }
+        
         }
 
         /// <summary>
@@ -45,14 +56,6 @@ namespace OneLineNotebook.DataAccess
             return _connection.DeleteAsync(note);
         }
 
-        /// <summary>
-        /// Drop db .
-        /// </summary>
-
-        public string PathDB()
-        {
-            return _connection.DatabasePath;
-        }
 
     }
 }
