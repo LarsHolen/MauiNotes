@@ -10,8 +10,8 @@ namespace OneLineNotebook.DataAccess
 
         public SqliteDatabaseAccess(string dbPath)
         {
-            
-            _connection = new SQLiteAsyncConnection(dbPath);
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + dbPath);
+            _connection = new SQLiteAsyncConnection(path);
             try
             {
                 _connection.CreateTableAsync<NoteModel>().Wait();

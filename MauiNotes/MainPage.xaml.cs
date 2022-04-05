@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-		sqliteDatabaseAccess = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "notesDb")); // LocalApplicationData
+		sqliteDatabaseAccess = new("notesDb"); // LocalApplicationData
 		LoadNotes();
 		
 
@@ -40,36 +40,42 @@ public partial class MainPage : ContentPage
 
     private async void Button_Clicked(object sender, EventArgs e)
 	{
-		if (!string.IsNullOrEmpty(noteEntry.Text))
+		if (string.IsNullOrEmpty(noteEntry.Text)) return;
+		if(noteEntry.Text == selected.Note)
+        {
+			noteEntry.Text = "";
+			selected = new NoteModel();
+			collectionView.SelectedItem = selected;
+			return;
+        }
+
+		await sqliteDatabaseAccess.SaveNoteAsync(new NoteModel
 		{
-			await sqliteDatabaseAccess.SaveNoteAsync(new NoteModel
-			{
-				Note = noteEntry.Text,
-				Date = DateTime.Now.ToString()
-			});
-			noteEntry.Text = string.Empty;
-			collectionView.ItemsSource = await sqliteDatabaseAccess.LoadNotesAsync();
-		}
+			Note = noteEntry.Text,
+			Date = DateTime.Now.ToString()
+		});
+		noteEntry.Text = string.Empty;
+		collectionView.ItemsSource = await sqliteDatabaseAccess.LoadNotesAsync();
 	}
 
 
 	void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 	{
-		string previous = (e.PreviousSelection.FirstOrDefault() as NoteModel)?.Note;
+		//string previous = (e.PreviousSelection.FirstOrDefault() as NoteModel)?.Note;
 		string current = (e.CurrentSelection.FirstOrDefault() as NoteModel)?.Note;
 		selected = e.CurrentSelection.FirstOrDefault() as NoteModel;
 		Debug.WriteLine(current);
+		noteEntry.Text = current;
 		Debug.WriteLine(selected.Id);
 	}
 
 	private async void Delete_Button_Clicked(object sender, EventArgs e)
 	{
 
-		if (selected is not null)
-		{
-			await sqliteDatabaseAccess.DeleteNote(selected);
-			collectionView.ItemsSource = await sqliteDatabaseAccess.LoadNotesAsync();
-		}
+		if (selected is null) return;
+
+		await sqliteDatabaseAccess.DeleteNote(selected);
+		collectionView.ItemsSource = await sqliteDatabaseAccess.LoadNotesAsync();
 	}
 }
 

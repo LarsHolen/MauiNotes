@@ -5,7 +5,7 @@
 
     <StackLayout Margin="20,35,20,20">
 
-        <Label  Text="OnelineNotebook!"
+        <Label  Text="OneLineNotebook!"
                         Grid.Row="0"
                         SemanticProperties.HeadingLevel="Level1"
                         FontSize="32"
@@ -16,13 +16,13 @@
 
         <Button Text="Add Note"
                         FontAttributes="Bold"
-                        SemanticProperties.Hint="Counts the number of times you click"
+                        SemanticProperties.Hint="Saves text from the inputfield to local database"
                         Clicked="Button_Clicked"
                         HorizontalOptions="Center" 
                 />
         <Button Text="Delete Note"
                         FontAttributes="Bold"
-                        SemanticProperties.Hint="Counts the number of times you click"
+                        SemanticProperties.Hint="Deletes the selected note from local database"
                         Clicked="Delete_Button_Clicked"
                         HorizontalOptions="Center" 
                 />
