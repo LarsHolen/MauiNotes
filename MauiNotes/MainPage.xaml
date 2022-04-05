@@ -1,0 +1,43 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiNotes.MainPage"
+             BackgroundColor="{DynamicResource SecondaryColor}">
+
+    <StackLayout Margin="20,35,20,20">
+
+        <Label  Text="OnelineNotebook!"
+                        Grid.Row="0"
+                        SemanticProperties.HeadingLevel="Level1"
+                        FontSize="32"
+                        HorizontalOptions="Center" 
+                />
+
+        <Entry x:Name="noteEntry" Placeholder="Your Note"/>
+
+        <Button Text="Add Note"
+                        FontAttributes="Bold"
+                        SemanticProperties.Hint="Counts the number of times you click"
+                        Clicked="Button_Clicked"
+                        HorizontalOptions="Center" 
+                />
+        <Button Text="Delete Note"
+                        FontAttributes="Bold"
+                        SemanticProperties.Hint="Counts the number of times you click"
+                        Clicked="Delete_Button_Clicked"
+                        HorizontalOptions="Center" 
+                />
+
+        <CollectionView x:Name="collectionView" 
+                        SelectionMode="Single" 
+                        SelectionChanged="OnSelectionChanged">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Label Text="{Binding Note}"
+                                       FontSize="Medium"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
