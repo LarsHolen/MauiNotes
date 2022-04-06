@@ -3,33 +3,59 @@
              x:Class="MauiNotes.MainPage"
              BackgroundColor="{DynamicResource SecondaryColor}">
 
-    <StackLayout Margin="20,35,20,20">
+
+    <Grid Margin="20,35,20,20" RowSpacing="3">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
         <Label  Text="OneLineNotebook!"
-                        Grid.Row="0"
-                        SemanticProperties.HeadingLevel="Level1"
-                        FontSize="32"
-                        HorizontalOptions="Center" 
-                />
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center"/>
 
-        <Entry x:Name="noteEntry" Placeholder="Your Note"/>
+        <Entry x:Name="noteEntry" 
+               Grid.Row="1"
+               Grid.ColumnSpan="2"
+               Placeholder="Your Note" 
+               Completed="OnTextCompleted" 
+               Focused="OnTextFocus"
+               Unfocused="OutOfFocus"/>
 
         <Button Text="Add Note"
-                        FontAttributes="Bold"
-                        SemanticProperties.Hint="Saves text from the inputfield to local database"
-                        Clicked="Button_Clicked"
-                        HorizontalOptions="Center" 
-                />
-        <Button Text="Delete Note"
-                        FontAttributes="Bold"
-                        SemanticProperties.Hint="Deletes the selected note from local database"
-                        Clicked="Delete_Button_Clicked"
-                        HorizontalOptions="Center" 
-                />
+                Grid.Row="3"
+                Grid.Column="0"
+                FontAttributes="Bold"
+                SemanticProperties.Hint="Saves text from the inputfield to local database"
+                Clicked="Add_Button_Clicked"
+                HorizontalOptions="Center" />
 
-        <CollectionView x:Name="collectionView" 
+        <Button Text="Delete Note"
+                Grid.Row="3"
+                Grid.Column="1"
+                FontAttributes="Bold"
+                SemanticProperties.Hint="Deletes the selected note from local database"
+                Clicked="Delete_Button_Clicked"
+                HorizontalOptions="Center"/>
+
+        <CollectionView x:Name="collectionView"
+                        Grid.Row="4"
+                        Grid.ColumnSpan="2"
                         SelectionMode="Single" 
-                        SelectionChanged="OnSelectionChanged">
+                        SelectionChanged="OnSelectionChanged"
+                        ItemsUpdatingScrollMode="KeepLastItemInView"
+                        VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout>
@@ -39,5 +65,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </StackLayout>
+    </Grid>
 </ContentPage>

@@ -4,13 +4,15 @@ using System.Diagnostics;
 
 namespace OneLineNotebook.DataAccess
 {
-    public class SqliteDatabaseAccess
+    public class NoteRepository
     {
         private readonly SQLiteAsyncConnection _connection;
+        private string path;
 
-        public SqliteDatabaseAccess(string dbPath)
+        public NoteRepository(string dbPath)
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + dbPath);
+            // Make a path for the DB in the localAppdata folder
+            path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + dbPath);
             _connection = new SQLiteAsyncConnection(path);
             try
             {
@@ -20,6 +22,7 @@ namespace OneLineNotebook.DataAccess
                 Debug.WriteLine("Error1: " + e.InnerException.Message);
                 Debug.WriteLine("...:" + e.Message);
                 Debug.WriteLine("Error2: " + e.InnerException.Message);
+                Process.GetCurrentProcess().Kill();
             }
         
         }
@@ -30,7 +33,8 @@ namespace OneLineNotebook.DataAccess
         /// <returns></returns>
         public Task<List<NoteModel>> LoadNotesAsync()
         {
-            return _connection.Table<NoteModel>().ToListAsync();
+            return _connection.Table<NoteModel>().OrderByDescending(i => i.Date ).ToListAsync();
+            //_connection.Table<NoteModel>().ToListAsync();
         }
 
 
