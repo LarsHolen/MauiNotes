@@ -23,7 +23,6 @@ public partial class MainPage : ContentPage
 		// Creating the DB/table if its not there.  And give the name to the db
 		noteRepository = new("notesDb"); // LocalApplicationData
 
-		
 
 		// Load notes
 		LoadNotes();

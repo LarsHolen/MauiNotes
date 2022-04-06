@@ -4,7 +4,7 @@
              BackgroundColor="{DynamicResource SecondaryColor}">
 
 
-    <Grid Margin="20,35,20,20" RowSpacing="3">
+    <Grid Margin="20,35,20,20" RowSpacing="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -58,9 +58,9 @@
                         VerticalScrollBarVisibility="Default">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout>
-                        <Label Text="{Binding Note}"
-                                       FontSize="Medium"/>
+                    <StackLayout Spacing="3">
+                        <Label  Text="{Binding Note}"
+                                FontSize="Medium"/>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
